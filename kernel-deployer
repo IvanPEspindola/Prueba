@@ -1,0 +1,5 @@
+#!/bin/bash
+echo "Compilamos y levantamos la memorie!"
+cd src/memorie/
+make
+./modulo-memorie
