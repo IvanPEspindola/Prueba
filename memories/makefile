@@ -1,5 +1,5 @@
-GET = memories
-LIBS = -lcommons -pthread
+TARGET = memories
+LIBS = -lcommons -lsockets
 CC = gcc
 CFLAGS = -g -Wall
 

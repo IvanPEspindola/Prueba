@@ -1,5 +1,5 @@
-GET = lfs
-LIBS = -lcommons -pthread
+TARGET = kernel
+LIBS = -lcommons -lsockets
 CC = gcc
 CFLAGS = -g -Wall
 
