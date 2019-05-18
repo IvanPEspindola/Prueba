@@ -1,0 +1,7 @@
+[INFO] 20:28:22:837 Servidor/(27548:27548): Servidor listo para recibir al cliente
+[INFO] 20:28:28:488 Servidor/(27548:27548): Se conecto un cliente!
+[INFO] 20:28:35:546 Servidor/(27548:27548): Handshake recibido
+[INFO] 20:28:36:492 Servidor/(27548:27548): Ahora recibo el mensaje del handshake
+[INFO] 20:28:37:361 Servidor/(27548:27548): Me llego el mensaje 
+[INFO] 20:28:42:559 Servidor/(27548:27548): Se conecto una MEMORIES
+[ERROR] 20:29:02:218 Servidor/(27548:27548): El cliente se desconecto. Terminando servidor

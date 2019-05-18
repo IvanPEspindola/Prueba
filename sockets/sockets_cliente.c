@@ -1,4 +1,4 @@
-#include "sockets.h"
+#include "sockets_cliente.h"
 
 void* serializar_paquete(t_paquete* paquete, int bytes)
 {
@@ -37,17 +37,20 @@ int crear_conexion_cliente(char *ip, char* puerto)
 	return socket_cliente;
 }
 
-//void enviar_mensaje(char* mensaje, int socket_cliente)
-//{
+void enviar_handshake(int socket_cliente, e_proceso proceso) {
+	char* mensaje = malloc(sizeof(e_proceso));
+	memcpy(mensaje, &proceso, sizeof(e_proceso));
+//	sprintf(mensaje, "%d", proceso);
+	enviar_mensaje(HANDSHAKE, mensaje, socket_cliente);
 //	t_paquete* paquete = malloc(sizeof(t_paquete));
 //
-//	paquete->codigo_operacion = MENSAJE;
+//	paquete->codigo_operacion = HANDSHAKE;
 //	paquete->buffer = malloc(sizeof(t_buffer));
-//	paquete->buffer->size = strlen(mensaje) + 1;
-//	paquete->buffer->stream = malloc(paquete->buffer->size);
-//	memcpy(paquete->buffer->stream, mensaje, paquete->buffer->size);
+//	paquete->buffer->size = sizeof(e_proceso);
+//	paquete->buffer->stream = malloc((int) &paquete->buffer->size);
+//	memcpy(paquete->buffer->stream, &proceso, paquete->buffer->size);
 //
-//	int bytes = paquete->buffer->size + 2*sizeof(int);
+//	int bytes = paquete->buffer->size + 2 * sizeof(int);
 //
 //	void* a_enviar = serializar_paquete(paquete, bytes);
 //
@@ -55,8 +58,27 @@ int crear_conexion_cliente(char *ip, char* puerto)
 //
 //	free(a_enviar);
 //	eliminar_paquete(paquete);
-//}
+}
 
+void enviar_mensaje(e_operation_code op_code, char* mensaje, int socket_cliente)
+{
+	t_paquete* paquete = malloc(sizeof(t_paquete));
+
+	paquete->codigo_operacion = op_code;
+	paquete->buffer = malloc(sizeof(t_buffer));
+	paquete->buffer->size = strlen(mensaje) + 1;
+	paquete->buffer->stream = malloc(paquete->buffer->size);
+	memcpy(paquete->buffer->stream, mensaje, paquete->buffer->size);
+
+	int bytes = paquete->buffer->size + 2*sizeof(int);
+
+	void* a_enviar = serializar_paquete(paquete, bytes);
+
+	send(socket_cliente, a_enviar, bytes, 0);
+
+	free(a_enviar);
+	eliminar_paquete(paquete);
+}
 
 void crear_buffer(t_paquete* paquete)
 {

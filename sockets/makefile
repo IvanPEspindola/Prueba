@@ -5,11 +5,12 @@ CFLAGS = -g -Wall
 
 .PHONY: default all clean
 
-default: $(TARGET) install
-all: clean default 
+default: $(TARGET) 
+all: clean default install
 
 OBJECTS = $(patsubst %.c, %.o, $(wildcard *.c))
 HEADERS = $(wildcard *.h)
+H_SRCS = $(shell find . -iname "*.h" | tr '\n' ' ')
 
 %.o: %.c $(HEADERS)
 	$(CC) $(CFLAGS) -c $< -o $@
@@ -19,13 +20,13 @@ HEADERS = $(wildcard *.h)
 $(TARGET): $(OBJECTS)
 	$(CC) -shared $(OBJECTS) $(CFLAGS) $(LIBS) -o $@
 
-install:
+install: 
 	cp -u libsockets.so /usr/lib
+	rm -rf /usr/include/sockets/
 	mkdir /usr/include/sockets
-	cp --parents -u $(HEADERS) /usr/include/sockets
+	cp --parents $(H_SRCS) /usr/include/sockets
 
 clean:
-	-rm -f *.o
-	-rm -f $(TARGET)
-	-rm -rf /usr/include/sockets/
-	-rm -f *.log
+	rm -f *.o
+	rm -f $(TARGET)
+	rm -f *.log
