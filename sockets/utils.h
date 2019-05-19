@@ -17,11 +17,9 @@ typedef enum {
 	LFS
 } e_proceso;
 
-typedef struct
-{
+typedef struct {
 	int size;
 	void* stream;
 } t_buffer;
-
 
 #endif /* UTILS_H_ */

@@ -16,7 +16,7 @@ int iniciar_servidor(char* ip, char* puerto)
 
     getaddrinfo(ip, puerto, &hints, &servinfo);
 
-    for (p=servinfo; p != NULL; p = p->ai_next)
+    for (p = servinfo; p != NULL; p = p->ai_next)
     {
         if ((socket_servidor = socket(p->ai_family, p->ai_socktype, p->ai_protocol)) == -1)
             continue;
