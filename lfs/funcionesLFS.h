@@ -1,14 +1,14 @@
-#ifndef FUNCIONES_INSTANCIA_H_
-#define FUNCIONES_INSTANCIA_H_
+#ifndef FUNCIONES_LFS_H_
+#define FUNCIONES_LFS_H_
 
 #include "funcionesLFS.h"
 #include "auxiliares.h"
 #include "estructuras.h"
-#include <string.h>
+#include <commons/string.h>
 
-int leerConfiguracionLFS(char* filePath);
+int leerConfiguracionLFS();
 
 extern t_log *  LOG_LFS;
 extern t_configuracionLFS configuracionLFS;
 
-#endif /* FUNCIONES_INSTANCIA_H_ */
+#endif /* FUNCIONES_LFS_H_ */

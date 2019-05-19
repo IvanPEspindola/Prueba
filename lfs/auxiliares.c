@@ -10,6 +10,5 @@ void loguear(TIPO_ERROR te, char * mensaje)
 			log_error(LOGGER_LFS, mensaje);
 			break;
 	}
-
 	free(mensaje);
 }

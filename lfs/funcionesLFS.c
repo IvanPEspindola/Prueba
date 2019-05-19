@@ -3,13 +3,13 @@
 
 t_configuracionLFS configuracionLFS;
 
-int leerConfiguracionLFS(char* filePath) {
+int leerConfiguracionLFS() {
 	bool cfgOk = true;
-	loguear(INFO, string_from_format("Leyendo la configuracion del LFS : %s", filePath));
+	loguear(INFO, string_from_format("Leyendo la configuracion del LFS : %s", LFS_DEFAULT_CONFIG_FILENAME));
 
-	if( access(filePath, F_OK ) != -1 ) {
+	if( access(LFS_DEFAULT_CONFIG_FILENAME, F_OK ) != -1 ) {
 
-		t_config * configuracion = config_create(filePath);
+		t_config * configuracion = config_create(LFS_DEFAULT_CONFIG_FILENAME);
 
 		if(!config_has_property(configuracion, "PUERTO_ESCUCHA")) {
 			log_error(LOGGER_LFS,ERR_LFS_LISTENING_PORT_NOT_SET);
@@ -37,7 +37,7 @@ int leerConfiguracionLFS(char* filePath) {
 		}
 
 		if(cfgOk){
-			configuracionLFS.PUERTO_ESCUCHA = config_get_int_value(configuracion, "PUERTO_ESCUCHA");
+			configuracionLFS.PUERTO_ESCUCHA = string_duplicate(config_get_string_value(configuracion, "PUERTO_ESCUCHA"));
 			configuracionLFS.PUNTO_MONTAJE 	= string_duplicate(config_get_string_value(configuracion, "PUNTO_MONTAJE"));
 			configuracionLFS.TAMANIO_VALUE 	= config_get_int_value(configuracion, "TAMANIO_VALUE");
 			configuracionLFS.RETARDO 		= config_get_int_value(configuracion, "RETARDO");

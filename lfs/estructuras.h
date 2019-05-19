@@ -2,7 +2,7 @@
 #define ESTRUCTURAS_H
 
 typedef struct ConfiguracionLFS {
-	int PUERTO_ESCUCHA;
+	char * PUERTO_ESCUCHA;
 	char * PUNTO_MONTAJE;
 	int TAMANIO_VALUE;
 	int RETARDO;

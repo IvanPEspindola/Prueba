@@ -11,11 +11,7 @@ int main(int argc, char** argv) {
 
 	log_info(LOGGER_LFS, "Iniciando LFS.");
 
-	char * pathArchivoConfiguracion;
-
-	pathArchivoConfiguracion = LFS_DEFAULT_CONFIG_FILENAME;
-
-	if(leerConfiguracionLFS(pathArchivoConfiguracion) == EXIT_SUCCESS){
+	if(leerConfiguracionLFS() == EXIT_SUCCESS){
 		log_info(LOGGER_LFS, "Configuracion de LFS leído exitosamente.");
 	}
 	else {
@@ -31,9 +27,10 @@ int main(int argc, char** argv) {
 				configuracionLFS.TIEMPO_DUMP)
 				);
 
-	int server_fd = iniciar_servidor("127.0.0.1", "4444");
+	int server_fd = iniciar_servidor("127.0.0.1", configuracionLFS.PUERTO_ESCUCHA);
 	log_info(LOGGER_LFS, "Servidor listo para recibir al cliente");
 	int cliente_fd = esperar_cliente(server_fd);
+
 	e_proceso proceso = recibir_handshake(cliente_fd);
 	t_list * lista;
 	while (1) {

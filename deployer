@@ -1,0 +1,8 @@
+#!/bin/bash
+echo "Arrancamos el deploy!"
+git clone https://github.com/sisoputnfrba/so-commons-library.git ../so-commons-library
+cd ../so-commons-library
+make
+make install
+cd ../tp-2019-1c-404-Not-found-/src/sockets
+make all

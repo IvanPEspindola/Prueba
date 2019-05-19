@@ -1,5 +1,5 @@
 #!/bin/bash
-echo "Compilamos y levantamos la memorie!"
-cd src/memorie/
-make
-./modulo-memorie
+echo "Compilamos y levantamos la kernel!"
+cd src/kernel/
+make all
+./modulo-kernel

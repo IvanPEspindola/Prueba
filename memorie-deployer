@@ -1,5 +1,5 @@
 #!/bin/bash
-echo "Compilamos y levantamos el lfs!"
-cd src/lfs/
-make
-./modulo-lfs
+echo "Compilamos y levantamos el memories!"
+cd src/memories/
+make all
+./modulo-memories
