@@ -143,4 +143,8 @@ local.properties
 # los .log no se suben
 *.log
 
+#ejecutables
+lfs
+kernel
+memories
 # End of https://www.gitignore.io/api/c,linux,eclipse
