@@ -8,7 +8,9 @@
 #include <commons/log.h>
 #include <commons/collections/list.h>
 #include <sockets/utils.h>
+#include "funcionesLFS.h"
+#include "auxiliares.h"
 
-t_log* logger;
+t_log* LOGGER_LFS;
 
 #endif /* LFS_H_ */
