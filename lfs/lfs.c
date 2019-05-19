@@ -1,5 +1,7 @@
 #include "lfs.h"
 
+void destruir_elemento(char* elemento);
+
 int main(void) {
 	void imprimir(char* value) {
 		printf("%s\n", value);
@@ -15,10 +17,11 @@ int main(void) {
 	while (1) {
 		int cod_op = recibir_operacion(cliente_fd);
 		switch (cod_op) {
-		case PAQUETE:
+		case SELECT:
 			lista = recibir_paquete(cliente_fd);
 			printf("Me llegaron los siguientes valores:\n");
 			list_iterate(lista, (void*) imprimir);
+			list_destroy_and_destroy_elements(lista, (void*) destruir_elemento);
 			break;
 		case -1:
 			log_error(logger, "El cliente se desconecto. Terminando servidor");
@@ -28,5 +31,11 @@ int main(void) {
 			break;
 		}
 	}
+	destruir_servidor();
+	log_destroy(logger);
 	return EXIT_SUCCESS;
+}
+
+void destruir_elemento(char* elemento) {
+	free(elemento);
 }

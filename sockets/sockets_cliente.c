@@ -40,24 +40,7 @@ int crear_conexion_cliente(char *ip, char* puerto)
 void enviar_handshake(int socket_cliente, e_proceso proceso) {
 	char* mensaje = malloc(sizeof(e_proceso));
 	memcpy(mensaje, &proceso, sizeof(e_proceso));
-//	sprintf(mensaje, "%d", proceso);
 	enviar_mensaje(HANDSHAKE, mensaje, socket_cliente);
-//	t_paquete* paquete = malloc(sizeof(t_paquete));
-//
-//	paquete->codigo_operacion = HANDSHAKE;
-//	paquete->buffer = malloc(sizeof(t_buffer));
-//	paquete->buffer->size = sizeof(e_proceso);
-//	paquete->buffer->stream = malloc((int) &paquete->buffer->size);
-//	memcpy(paquete->buffer->stream, &proceso, paquete->buffer->size);
-//
-//	int bytes = paquete->buffer->size + 2 * sizeof(int);
-//
-//	void* a_enviar = serializar_paquete(paquete, bytes);
-//
-//	send(socket_cliente, a_enviar, bytes, 0);
-//
-//	free(a_enviar);
-//	eliminar_paquete(paquete);
 }
 
 void enviar_mensaje(e_operation_code op_code, char* mensaje, int socket_cliente)
@@ -87,10 +70,10 @@ void crear_buffer(t_paquete* paquete)
 	paquete->buffer->stream = NULL;
 }
 
-t_paquete* crear_paquete(void)
+t_paquete* crear_paquete(e_operation_code op_code)
 {
 	t_paquete* paquete = malloc(sizeof(t_paquete));
-	paquete->codigo_operacion = PAQUETE;
+	paquete->codigo_operacion = op_code;
 	crear_buffer(paquete);
 	return paquete;
 }

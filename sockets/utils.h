@@ -3,7 +3,12 @@
 
 typedef enum {
 	HANDSHAKE,
-	PAQUETE
+	SELECT,
+	INSERT,
+	CREATE,
+	DESCRIBE,
+	DROP,
+	JOURNAL
 } e_operation_code;
 
 typedef enum {

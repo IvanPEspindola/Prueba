@@ -141,6 +141,6 @@ local.properties
 .nfs*
 
 # los .log no se suben
-.log
+*.log
 
 # End of https://www.gitignore.io/api/c,linux,eclipse

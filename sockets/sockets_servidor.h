@@ -11,11 +11,10 @@
 #include <string.h>
 #include "utils.h"
 
-t_log* logger;
-
-void* recibir_buffer(int*, int);
+t_log* logger_servidor;
 
 int iniciar_servidor(char* ip, char* puerto);
+void destruir_servidor();
 int esperar_cliente(int socket);
 e_proceso recibir_handshake(int socket);
 t_list* recibir_paquete(int socket);
