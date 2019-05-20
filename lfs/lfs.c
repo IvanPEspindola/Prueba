@@ -2,15 +2,37 @@
 
 void destruir_elemento(char* elemento);
 
-int main(void) {
+int main(int argc, char** argv) {
 	void imprimir(char* value) {
 		printf("%s\n", value);
 	}
 
-	logger = log_create("log.log", "Servidor", 1, LOG_LEVEL_DEBUG);
+	LOGGER_LFS = log_create("log-lfs.log", "Servidor", 1, LOG_LEVEL_DEBUG);
+
+	log_info(LOGGER_LFS, "Iniciando LFS.");
+
+	char * pathArchivoConfiguracion;
+
+	pathArchivoConfiguracion = LFS_DEFAULT_CONFIG_FILENAME;
+
+	if(leerConfiguracionLFS(pathArchivoConfiguracion) == EXIT_SUCCESS){
+		log_info(LOGGER_LFS, "Configuracion de LFS leído exitosamente.");
+	}
+	else {
+		log_error(LOGGER_LFS ,"No se pudo levantar la configuracion del LFS. Abortando.");
+		return EXIT_FAILURE;
+	}
+
+	loguear(INFO, string_from_format("Instancia iniciada [Puerto escucha: %d - Punto montaje: %s - Tamanio value: %d - Retardo: %d - Tiempo dump: %d]",
+				configuracionLFS.PUERTO_ESCUCHA,
+				configuracionLFS.PUNTO_MONTAJE,
+				configuracionLFS.TAMANIO_VALUE,
+				configuracionLFS.RETARDO,
+				configuracionLFS.TIEMPO_DUMP)
+				);
 
 	int server_fd = iniciar_servidor("127.0.0.1", "4444");
-	log_info(logger, "Servidor listo para recibir al cliente");
+	log_info(LOGGER_LFS, "Servidor listo para recibir al cliente");
 	int cliente_fd = esperar_cliente(server_fd);
 	e_proceso proceso = recibir_handshake(cliente_fd);
 	t_list * lista;
@@ -24,15 +46,16 @@ int main(void) {
 			list_destroy_and_destroy_elements(lista, (void*) destruir_elemento);
 			break;
 		case -1:
-			log_error(logger, "El cliente se desconecto. Terminando servidor");
+			log_error(LOGGER_LFS, "El cliente se desconecto. Terminando servidor");
 			return EXIT_FAILURE;
 		default:
-			log_warning(logger, "Operacion desconocida.");
+			log_warning(LOGGER_LFS, "Operacion desconocida.");
 			break;
 		}
 	}
+	loguear(INFO, string_from_format("Destruyendo instancia"));
 	destruir_servidor();
-	log_destroy(logger);
+	log_destroy(LOGGER_LFS);
 	return EXIT_SUCCESS;
 }
 
