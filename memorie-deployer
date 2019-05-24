@@ -1,5 +1,5 @@
 #!/bin/bash
 echo "Compilamos y levantamos el memories!"
-cd src/memories/
+cd memories/
 make all
-./modulo-memories
+./memories

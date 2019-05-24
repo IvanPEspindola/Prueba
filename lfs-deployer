@@ -1,5 +1,5 @@
 #!/bin/bash
 echo "Compilamos y levantamos el lfs!"
-cd src/lfs/
+cd lfs/
 make all
-./modulo-lfs
+./lfs

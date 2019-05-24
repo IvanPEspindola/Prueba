@@ -4,5 +4,5 @@ git clone https://github.com/sisoputnfrba/so-commons-library.git ../so-commons-l
 cd ../so-commons-library
 make
 make install
-cd ../tp-2019-1c-404-Not-found-/src/sockets
+cd ../tp-2019-1c-404-Not-found-/sockets
 make all
