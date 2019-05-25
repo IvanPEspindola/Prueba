@@ -1,5 +1,5 @@
 #!/bin/bash
 echo "Compilamos y levantamos la kernel!"
-cd src/kernel/
+cd kernel/
 make all
-./modulo-kernel
+./kernel
