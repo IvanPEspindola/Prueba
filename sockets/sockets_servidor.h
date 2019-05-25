@@ -10,6 +10,7 @@
 #include <commons/collections/list.h>
 #include <string.h>
 #include "utils.h"
+#include <errno.h>
 
 t_log* logger_servidor;
 

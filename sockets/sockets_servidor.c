@@ -22,6 +22,8 @@ int iniciar_servidor(char* ip, char* puerto)
             continue;
 
         if (bind(socket_servidor, p->ai_addr, p->ai_addrlen) == -1) {
+        	log_error(logger_servidor, "Error al hacer bind");
+        	log_error(logger_servidor, strerror(errno));
             close(socket_servidor);
             continue;
         }
@@ -44,8 +46,14 @@ int esperar_cliente(int socket_servidor)
 
 	int socket_cliente = accept(socket_servidor, &dir_cliente, &tam_direccion);
 
-	log_info(logger_servidor, "Se conecto un cliente!");
-
+	if (socket_cliente > 0) {
+		log_info(logger_servidor, "Se conecto un cliente!");
+	}
+	else {
+		log_error(logger_servidor, "Ocurrió un error en el accept de esperar_cliente");
+		log_error(logger_servidor, strerror(errno));
+		return EXIT_FAILURE;
+	}
 	return socket_cliente;
 }
 
