@@ -145,6 +145,6 @@ local.properties
 
 #ejecutables
 lfs
-kernel
+kernel/kernel
 memories
 # End of https://www.gitignore.io/api/c,linux,eclipse
