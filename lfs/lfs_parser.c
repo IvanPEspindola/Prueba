@@ -4,7 +4,7 @@ void new_request(int codigo, char** array){
 
 	switch(codigo){
 		case 1: //SELECT
-
+			// TODO: Definir si lo mandamos por sockets o llamamos directamente al a func SELECT_OPERACION
 			break;
 		case 2: //INSERT
 

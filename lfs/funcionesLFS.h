@@ -19,6 +19,7 @@ void journal_operacion(int cliente_fd);
 void atenderMemory(int cliente_fd);
 void inicializarDirectorioTablas();
 int inicializarLFS();
-int obtenerProximoBloqueLibre();
+int obtenerPrimerBloqueLibreYOcuparlo();
+void crearBitmapBloques();
 
 #endif /* FUNCIONES_LFS_H_ */
