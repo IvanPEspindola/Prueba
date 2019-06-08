@@ -9,6 +9,12 @@ typedef struct ConfiguracionLFS {
 	int TIEMPO_DUMP;
 } t_configuracionLFS;
 
+typedef struct Metadata_LFS {
+	int BLOCK_SIZE;
+	int BLOCKS;
+	char * MAGIC_NUMBER;
+} t_metadataLFS;
+
 typedef enum {
 	INFO,
 	ERROR

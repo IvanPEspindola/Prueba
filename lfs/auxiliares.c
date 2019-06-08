@@ -1,7 +1,6 @@
 #include "auxiliares.h"
 
-void loguear(TIPO_ERROR te, char * mensaje)
-{
+void loguear(TIPO_ERROR te, char * mensaje) {
 	switch(te) {
 		case INFO:
 			log_info(LOGGER_LFS, mensaje);

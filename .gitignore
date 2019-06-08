@@ -144,7 +144,7 @@ local.properties
 *.log
 
 #ejecutables
-lfs
-kernel
-memories
+lfs/lfs
+kernel/kernel
+memories/memories
 # End of https://www.gitignore.io/api/c,linux,eclipse

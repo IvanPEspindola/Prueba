@@ -1,5 +1,5 @@
 TARGET = kernel
-LIBS = -lcommons -lsockets
+LIBS = -lcommons -lsockets -lreadline
 CC = gcc
 CFLAGS = -g -Wall
 
