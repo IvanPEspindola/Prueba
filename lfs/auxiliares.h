@@ -19,6 +19,8 @@
 #include <pthread.h>
 #include <sys/stat.h>
 #include <fcntl.h>
+#include <commons/bitarray.h>
+#include <semaphore.h>
 
 #define LFS_DEFAULT_CONFIG_FILENAME "lfs.cfg"
 t_log * LOGGER_LFS;
@@ -26,6 +28,9 @@ t_configuracionLFS configuracionLFS;
 pthread_t hiloMemorie;
 char * tables_dir;
 t_metadataLFS metadata_LFS;
+t_bitarray * bitmapBloques;
+sem_t sem_bitmapBloques;
+sem_t sem_tables;
 
 void loguear(TIPO_ERROR te, char * mensaje);
 

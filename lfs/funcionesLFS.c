@@ -98,6 +98,7 @@ int leerConfiguracionMetadata() {
 		}
 		free(metadata_dir);
 	}
+	crearBitmapBloques();
 	return EXIT_SUCCESS;
 }
 
@@ -114,6 +115,7 @@ int createTable(char * table, char ** table_dir, int cliente_fd) {
 	string_to_upper(table);
 	string_append(table_dir, table);
 	string_append(table_dir, "/");
+	sem_wait(&sem_tables);
 	DIR * table_fd = opendir(*table_dir);
 	if (table_fd) {
 		loguear(ERROR, string_from_format("CREATE ERROR: Table %s already exists", table));
@@ -125,6 +127,7 @@ int createTable(char * table, char ** table_dir, int cliente_fd) {
 		mkdir(*table_dir, S_IRWXU);
 	}
 	closedir(table_fd);
+	sem_post(&sem_tables);
 	return EXIT_SUCCESS;
 }
 
@@ -152,20 +155,25 @@ char * createTableMetadata(char * table_dir, t_list * mensajes) {
 void createTablePartitions(char * partitions, char * table_dir) {
 	int particiones = atoi(partitions);
 	for (int i = 1; i <= particiones; i++) {
-		char* partition_dir = string_duplicate(table_dir);
+		char * partition_dir = string_duplicate(table_dir);
 		char * partition_file = string_from_format("%d.bin", i);
 		string_append(&partition_dir, partition_file);
 		free(partition_file);
 		int partition_fd = open(partition_dir, O_RDWR | O_CREAT, S_IRWXU);
 		close(partition_fd);
-		t_config* partition = config_create(partition_dir);
-		char* size = string_itoa(0);
+		t_config * partition = config_create(partition_dir);
+		char * size = string_itoa(0);
 		config_set_value(partition, "SIZE", size);
 		free(size);
-		int block = obtenerProximoBloqueLibre();
-		char* blocks = string_from_format("[%d]", block);
-		config_set_value(partition, "BLOCKS", blocks);
-		free(blocks);
+		int block = obtenerPrimerBloqueLibreYOcuparlo();
+		if (block != -1) {
+			char* blocks = string_from_format("[%d]", block);
+			config_set_value(partition, "BLOCKS", blocks);
+			free(blocks);
+		}
+		else {
+			// TODO QUÉ PASA SI NO HAY NINGÚN BLOQUE VACIO??
+		}
 		free(partition_dir);
 		config_save(partition);
 		config_destroy(partition);
@@ -225,14 +233,6 @@ void drop_operacion(int cliente_fd) {
 	loguear(INFO, string_duplicate("Falta implementar"));
 }
 
-void journal_operacion(int cliente_fd) {
-	loguear(INFO, string_duplicate("Llegó un SELECT"));
-	t_list* mensajes = recibir_paquete(cliente_fd);
-	printf("Me llegaron los siguientes mensajes\n");
-	list_iterate(mensajes, (void*) imprimir);
-	loguear(INFO, string_duplicate("Falta implementar"));
-}
-
 void atenderMemorie(int cliente_fd) {
 	loguear(INFO, string_duplicate("Se creó el hilo para atender la petición"));
 	int cod_op;
@@ -253,9 +253,6 @@ void atenderMemorie(int cliente_fd) {
 	case DROP:
 		drop_operacion(cliente_fd);
 		break;
-	case JOURNAL:
-		journal_operacion(cliente_fd);
-		break;
 	default:
 		loguear(ERROR, string_duplicate("Operacion desconocida"));
 		break;
@@ -274,6 +271,7 @@ void inicializarDirectorioTablas() {
 
 int inicializarLFS() {
 	loguear(INFO, string_duplicate("Incializando cuestiones administrativas"));
+	sem_init(&sem_tables, 0, 1);
 	if (leerConfiguracionLFS() == EXIT_SUCCESS){
 		loguear(INFO, string_duplicate("Configuracion de LFS leído exitosamente."));
 	}
@@ -300,7 +298,26 @@ int inicializarLFS() {
 	}
 }
 
-int obtenerProximoBloqueLibre() {
-	// TODO LFS: FALTA IMPLEMENTAR EL BITMAP DE BLOQUES Y DEVOLVER EL PROXIMO BLOQUE LIBRE. POR AHORA SE HARDCODEA PARA DEVOVLER 1
-	return 1;
+int obtenerPrimerBloqueLibreYOcuparlo() {
+	int i;
+	sem_wait(&sem_bitmapBloques);
+	for (i = 0; i < metadata_LFS.BLOCKS; i++) {
+		if (!bitarray_test_bit(bitmapBloques, i)) {
+			break;
+		}
+	}
+	if(i >= 0) {
+		bitarray_set_bit(bitmapBloques, i);
+	}
+	sem_post(&sem_bitmapBloques);
+	return -1;
+}
+
+void crearBitmapBloques() {
+	char * data = calloc(metadata_LFS.BLOCKS, sizeof(char));
+	bitmapBloques = bitarray_create_with_mode(data, metadata_LFS.BLOCKS, LSB_FIRST);
+	for (int i = 0; i < metadata_LFS.BLOCKS; i++) {
+		bitarray_clean_bit(bitmapBloques, i);
+	}
+	sem_init(&sem_bitmapBloques, 0, 1);
 }
