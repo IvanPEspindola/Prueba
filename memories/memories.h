@@ -10,6 +10,9 @@
 #include <commons/log.h>
 #include <commons/config.h>
 
+void insertarEnArray(int direccion, char* value);
+char* setearMainMemory(int tamaniomem);
+
 typedef struct config
 {
 	int id_memory;
