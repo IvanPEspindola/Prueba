@@ -8,7 +8,8 @@ typedef enum {
 	CREATE,
 	DESCRIBE,
 	DROP,
-	JOURNAL
+	JOURNAL,
+	GOSSIPING
 } e_operation_code;
 
 typedef enum {
@@ -21,5 +22,12 @@ typedef struct {
 	int size;
 	void* stream;
 } t_buffer;
+
+typedef struct
+{
+	int id;
+	char* ip;
+	char* puerto;
+}gossipingData;
 
 #endif /* UTILS_H_ */
