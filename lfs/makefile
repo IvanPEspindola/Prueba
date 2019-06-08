@@ -1,5 +1,5 @@
 TARGET = lfs
-LIBS = -lcommons -lsockets -pthread
+LIBS = -lcommons -lsockets -pthread -lreadline
 CC = gcc
 CFLAGS = -g -Wall
 

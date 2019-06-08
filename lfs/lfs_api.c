@@ -1,10 +1,10 @@
-#include "kernel_api.h"
+#include "lfs_api.h"
 
 void ejecutar_consola(){
 
 	puts("");
 	puts("-----------------------------------------------");
-	puts("[KERNEL API] - Lissandra 2019 \"404-Not-found\"");
+	puts("- [LFS API]   Lissandra 2019 \"404-Not-found\"-");
 	puts("-----------------------------------------------");
 	puts("");
 
@@ -59,10 +59,9 @@ void help(){
 	puts("");
 	puts("- SELECT [NOMBRE_TABLA] [KEY]");
 	puts("- INSERT [NOMBRE_TABLA] [KEY] “[VALUE]”");
-	puts("- CREATE [TABLA] [TIPO_CONSISTENCIA] [NUMERO_PARTICIONES] [COMPACTION_TIME]");
+	puts("- CREATE [TABLA] [TIPO_CONSISTENCIA] [NUMERO_PARTICIONES] [COMPACTATION_TIME]");
 	puts("- DESCRIBE [NOMBRE_TABLA]");
 	puts("- DROP [NOMBRE_TABLA]");
-	puts("- JOURNAL");
 	puts("- SALIR");
 	puts("");
 }

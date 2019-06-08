@@ -14,7 +14,7 @@ int main(int argc, char** argv) {
 		loguear(INFO, string_duplicate("Esperando cliente..."));
 		cliente_fd = esperar_cliente(server_fd);
 		if (cliente_fd > 0) {
-			pthread_create(&hiloMemorie, NULL, (void*) atenderMemorie, (void*) cliente_fd);
+			pthread_create(&hiloMemory, NULL, (void*) atenderMemory, (void*) cliente_fd);
 		}
 	}
 	loguear(INFO, string_duplicate("Destruyendo LFS"));

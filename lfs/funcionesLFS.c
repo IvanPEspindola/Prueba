@@ -4,8 +4,9 @@
 
 #include "lfs.h"
 
+
 t_configuracionLFS configuracionLFS;
-pthread_t hiloMemorie;
+pthread_t hiloMemory;
 
 int leerConfiguracionLFS() {
 	bool cfgOk = true;
@@ -233,7 +234,7 @@ void journal_operacion(int cliente_fd) {
 	loguear(INFO, string_duplicate("Falta implementar"));
 }
 
-void atenderMemorie(int cliente_fd) {
+void atenderMemory(int cliente_fd) {
 	loguear(INFO, string_duplicate("Se creó el hilo para atender la petición"));
 	int cod_op;
 	cod_op = recibir_operacion(cliente_fd);
@@ -304,3 +305,5 @@ int obtenerProximoBloqueLibre() {
 	// TODO LFS: FALTA IMPLEMENTAR EL BITMAP DE BLOQUES Y DEVOLVER EL PROXIMO BLOQUE LIBRE. POR AHORA SE HARDCODEA PARA DEVOVLER 1
 	return 1;
 }
+
+

@@ -16,7 +16,7 @@ void select_operacion(int cliente_fd);
 void describe_operacion(int cliente_fd);
 void drop_operacion(int cliente_fd);
 void journal_operacion(int cliente_fd);
-void atenderMemorie(int cliente_fd);
+void atenderMemory(int cliente_fd);
 void inicializarDirectorioTablas();
 int inicializarLFS();
 int obtenerProximoBloqueLibre();

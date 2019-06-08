@@ -19,11 +19,14 @@
 #include <pthread.h>
 #include <sys/stat.h>
 #include <fcntl.h>
+#include <string.h>
+#include <readline/readline.h>
+#include <readline/history.h>
 
 #define LFS_DEFAULT_CONFIG_FILENAME "lfs.cfg"
 t_log * LOGGER_LFS;
 t_configuracionLFS configuracionLFS;
-pthread_t hiloMemorie;
+pthread_t hiloMemory;
 char * tables_dir;
 t_metadataLFS metadata_LFS;
 
